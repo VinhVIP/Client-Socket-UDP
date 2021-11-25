@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vinh.server;
 
 import java.sql.Connection;
@@ -12,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,9 +22,14 @@ public class Database {
     private final String dbURL;
 
     public Database(String name, int port, String user, String pass) {
-        dbURL = String.format("jdbc:sqlserver://%s:%d;user=%s;password=%s;databaseName=LTM", name, port, user, pass);
+        dbURL = String.format("jdbc:sqlserver://%s:%d;user=%s;password=%s;Database=LTM", name, port, user, pass);
     }
 
+    /**
+     * Kết nối tới database
+     *
+     * @return tình trạng kết nối
+     */
     public boolean connect() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -43,6 +44,16 @@ public class Database {
         }
     }
 
+    /**
+     * Thêm dữ liệu điểm sinh viên vào database
+     *
+     * @param msv
+     * @param ten
+     * @param toan
+     * @param van
+     * @param anh
+     * @return kết quả lệnh thêm
+     */
     public boolean add(String msv, String ten, float toan, float van, float anh) {
         try {
             String sql = "INSERT INTO STUDENT (MSV, TEN, TOAN, VAN, ANH) VALUES (?, ?, ?, ?, ?)";
@@ -72,6 +83,11 @@ public class Database {
 
     }
 
+    /**
+     * Lấy danh sách tất cả điểm sinh viên từ database
+     *
+     * @return danh sách
+     */
     public List<Student> getListStudents() {
         List<Student> list = new ArrayList<>();
 
@@ -93,6 +109,10 @@ public class Database {
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        list.sort((Student s1, Student s2) -> {
+            return s1.getMaSV().compareTo(s2.getMaSV());
+        });
 
         return list;
     }

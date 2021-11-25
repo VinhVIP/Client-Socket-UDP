@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vinh.server;
 
 import java.util.Base64;
@@ -17,6 +12,12 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class DES {
 
+    /**
+     * Mã hóa DES
+     * @param data      chuỗi cần mã hóa
+     * @param key       khóa
+     * @return          chuỗi được mã hóa
+     */
     public static String encrypt(String data, String key) {
         try {
             SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(), "DES");
@@ -32,6 +33,13 @@ public class DES {
         return null;
     }
 
+    /**
+     * Giải mã DES
+     * 
+     * @param encrypted     chuỗi bị mã hóa cần được giải mã
+     * @param key           khóa
+     * @return              chuỗi sau khi giải mã
+     */
     public static String decrypt(String encrypted, String key) {
         try {
             SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(), "DES");
@@ -50,6 +58,8 @@ public class DES {
     }
 
     public static void main(String[] args) {
+        // Testing
+        
         String s = "Tran quang vinh tran quang vinh";
         String key = "abcd1234";
         String en = encrypt(s, key);

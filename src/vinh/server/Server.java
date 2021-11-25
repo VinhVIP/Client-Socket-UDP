@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vinh.server;
 
 import java.io.ByteArrayInputStream;
@@ -25,8 +20,13 @@ import vinh.client.Config;
  */
 public class Server {
 
-    public static final String secretKey = "abcd6789";
-    public static final int PORT = 1234;
+    public static void main(String[] args) {
+        Server server = new Server(PORT);
+        server.run();
+    }
+
+    public static final String secretKey = "abcd6789";      // key bí mật dùng cho mã hóa DES
+    public static final int PORT = 1234;                    // cổng kết nối server
 
     DatagramSocket server;
     Database db = null;
@@ -56,9 +56,13 @@ public class Server {
                 cmd = din.readUTF();
 
                 if (cmd.equalsIgnoreCase(Config.ACT_CONNECT)) {
+                    // Yêu cầu kết nối tới server
+
                     response(Config.OK, in.getAddress(), in.getPort());
 
                 } else if (cmd.equalsIgnoreCase(Config.ACT_LOGIN)) {
+                    // Yêu cầu đăng nhập vào database
+
                     String name = din.readUTF();
                     int port = din.readInt();
                     String user = din.readUTF();
@@ -72,6 +76,8 @@ public class Server {
                         response(Config.FAIL, in.getAddress(), in.getPort());
                     }
                 } else if (cmd.equalsIgnoreCase(Config.ACT_ADD)) {
+                    // Yêu cầu thêm dữ liệu điểm sinh viên
+
                     String msv = din.readUTF();
                     String ten = din.readUTF();
                     float toan = din.readFloat();
@@ -93,6 +99,8 @@ public class Server {
                         System.out.println("Chua ket noi toi csdl");
                     }
                 } else if (cmd.equalsIgnoreCase(Config.ACT_LIST)) {
+                    // Yêu cầu lấy danh sách tất cả điểm sinh viên
+
                     List<Student> list = db.getListStudents();
                     sendListStudents(list, in.getAddress(), in.getPort());
                 }
@@ -102,6 +110,13 @@ public class Server {
         }
     }
 
+    /**
+     * Phản hồi từ server về lại client
+     *
+     * @param statusCode mã trạng thái
+     * @param address địa chỉ
+     * @param port cổng
+     */
     public void response(int statusCode, InetAddress address, int port) {
         try {
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
@@ -117,6 +132,13 @@ public class Server {
         }
     }
 
+    /**
+     * Chuyển danh sách điểm sinh viên vào gói tin để gửi về client
+     *
+     * @param list danh sách điểm sinh viên
+     * @param address
+     * @param port
+     */
     public void sendListStudents(List<Student> list, InetAddress address, int port) {
         try {
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
@@ -138,6 +160,14 @@ public class Server {
         }
     }
 
+    /**
+     * Phản hồi về cho client thông điệp nào đấy
+     *
+     * @param statusCode max trạng thái
+     * @param message thông điệp
+     * @param address
+     * @param port
+     */
     public void sendToClient(int statusCode, String message, InetAddress address, int port) {
         try {
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
@@ -154,8 +184,4 @@ public class Server {
         }
     }
 
-    public static void main(String[] args) {
-        Server server = new Server(PORT);
-        server.run();
-    }
 }
