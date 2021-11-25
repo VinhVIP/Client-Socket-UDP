@@ -15,9 +15,9 @@ import javax.swing.JOptionPane;
  *
  * @author Vinh
  */
-public class ConnectorFrame extends javax.swing.JFrame {
+public class ServerConnection extends javax.swing.JFrame {
 
-    public ConnectorFrame() {
+    public ServerConnection() {
         initComponents();
         setTitle("Connect Server");
         
@@ -48,8 +48,10 @@ public class ConnectorFrame extends javax.swing.JFrame {
 
             client.setSoTimeout(2000);
 
+            // Xử lý kết quả trả về
             byte[] buffer = new byte[1024];
             DatagramPacket in = new DatagramPacket(buffer, buffer.length);
+
 
             try {
                 client.receive(in);
@@ -63,7 +65,7 @@ public class ConnectorFrame extends javax.swing.JFrame {
                     Config.serverPort = port;
 
                     this.setVisible(false);
-                    new SqlConnectorFrame().setVisible(true);
+                    new DatabaseLogin().setVisible(true);
                 }
 
             } catch (SocketTimeoutException e) {

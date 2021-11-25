@@ -44,7 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
         DatagramSocket client = null;
 
         try {
-            client = new DatagramSocket(4321);
+            client = new DatagramSocket();
             InetAddress server = InetAddress.getByName(Config.serverName);
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
 

@@ -17,3 +17,24 @@
 - Nhận thông tin sql từ client và kết nối sql server.
 
 - Nhận dữ liệu từ client thực hiện mã hóa bằng thuật toán DES sai đó lưu vào sql và nhận thông số từ giao diện để đọc giải mã dữ liệu, sau đó tính điểm trung bình của từng bạn và gửi về cho client.
+
+
+# Script tạo table
+
+```sql
+CREATE DATABASE LTM;
+
+CREATE TABLE STUDENT(
+	MSV nvarchar(50),
+	TEN nvarchar(50) not null,
+	TOAN nvarchar(50) not null,
+	VAN nvarchar(50) not null,
+	ANH nvarchar(50) not null,
+
+	PRIMARY KEY(MSV)
+)
+```
+
+# Chạy chương trình
+
+Chạy 2 file **Server.java** và **Client.java**

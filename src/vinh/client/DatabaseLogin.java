@@ -18,9 +18,9 @@ import javax.swing.JOptionPane;
  *
  * @author Vinh
  */
-public class SqlConnectorFrame extends javax.swing.JFrame {
+public class DatabaseLogin extends javax.swing.JFrame {
 
-    public SqlConnectorFrame() {
+    public DatabaseLogin() {
         initComponents();
 
         setTitle("Connect Database");
@@ -78,11 +78,11 @@ public class SqlConnectorFrame extends javax.swing.JFrame {
             }
 
         } catch (SocketException ex) {
-            Logger.getLogger(SqlConnectorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnknownHostException ex) {
-            Logger.getLogger(SqlConnectorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(SqlConnectorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

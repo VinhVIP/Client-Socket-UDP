@@ -88,12 +88,9 @@ public class Server {
                         boolean add = db.add(msv, ten, toan, van, anh);
 
                         if (add) {
-                            System.out.println("them thanh cong!");
-                            sendToClient(Config.OK, "Them thanh cong", in.getAddress(), in.getPort());
-
+                            sendToClient(Config.OK, "Thêm thành công!", in.getAddress(), in.getPort());
                         } else {
-                            System.out.println("MSV bi trung, k the them");
-                            sendToClient(Config.FAIL, "MSV bi trung, k the them", in.getAddress(), in.getPort());
+                            sendToClient(Config.FAIL, "Mã sinh viên bị trùng, không thể thêm!", in.getAddress(), in.getPort());
                         }
                     } else {
                         System.out.println("Chua ket noi toi csdl");
@@ -113,9 +110,9 @@ public class Server {
     /**
      * Phản hồi từ server về lại client
      *
-     * @param statusCode mã trạng thái
-     * @param address địa chỉ
-     * @param port cổng
+     * @param statusCode    mã trạng thái
+     * @param address       địa chỉ
+     * @param port          cổng
      */
     public void response(int statusCode, InetAddress address, int port) {
         try {
@@ -163,7 +160,7 @@ public class Server {
     /**
      * Phản hồi về cho client thông điệp nào đấy
      *
-     * @param statusCode max trạng thái
+     * @param statusCode mã trạng thái
      * @param message thông điệp
      * @param address
      * @param port
